@@ -20,7 +20,7 @@ namespace MinhaAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() { 
+        public async Task<IActionResult> GetAll() {  
         
             var produtos = await _contextDb.Produtos.ToListAsync();
             return Ok(produtos); 
