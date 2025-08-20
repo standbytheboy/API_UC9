@@ -27,6 +27,16 @@ namespace MinhaAPI.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id) {
+            Produto? produto = await _contextDb.Produtos.FindAsync(id);
+            if (produto == null)
+            {
+                return NotFound($"Produto com o id {id} não foi encontrado");
+            }
+            return Ok(produto);
+
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Produto produto) {
 
