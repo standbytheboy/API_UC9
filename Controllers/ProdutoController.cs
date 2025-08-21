@@ -18,6 +18,20 @@ namespace MinhaAPI.Controllers
             _contextDb = contextDb;
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Produto produto) {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _contextDb.Produtos.Add(produto);
+            await _contextDb.SaveChangesAsync();
+
+            return Ok("Produto criado com sucesso");
+
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAll() {  
@@ -37,19 +51,24 @@ namespace MinhaAPI.Controllers
             return Ok(produto);
 
         }
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Produto produto) {
 
-            if (!ModelState.IsValid)
-            {
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> Update([FromRoute] int id, Produto produto) {
+            if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            _contextDb.Produtos.Add(produto);
+            bool exist = await _contextDb.Produtos.AnyAsync(p => p.Id == id); // busca o id do produto no banco de dados
+
+            if(!exist) {
+                return NotFound($"Produto com o id {id} não foi encontrado.");
+            }
+
+            _contextDb.Entry(produto).State = EntityState.Modified; // verifica as modificações que fiz ao chamar meu update
             await _contextDb.SaveChangesAsync();
 
-            return Ok("Produto criado com sucesso");
-
+            return Ok("Produto atualizado com sucesso!");
         }
 
         [HttpDelete("{id}")]
