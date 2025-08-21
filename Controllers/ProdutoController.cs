@@ -54,7 +54,12 @@ namespace MinhaAPI.Controllers
 
         [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update([FromRoute] int id, Produto produto) {
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Produto produto) {
+
+            if (id != produto.Id) {
+                return BadRequest("O ID enviado não corresponde ao ID do produto no Banco de Dados");
+            }
+
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
@@ -67,7 +72,7 @@ namespace MinhaAPI.Controllers
 
             _contextDb.Entry(produto).State = EntityState.Modified; // verifica as modificações que fiz ao chamar meu update
             await _contextDb.SaveChangesAsync();
-
+                
             return Ok("Produto atualizado com sucesso!");
         }
 
