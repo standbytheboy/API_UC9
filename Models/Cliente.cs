@@ -20,5 +20,6 @@ namespace MinhaAPI.Models {
         [StringLength(14, MinimumLength = 11, ErrorMessage = "O telefone deve conter no máximo 14 caracteres.")]
         public string Telefone { get; set; } = string.Empty;
 
+        public List<Endereco> Enderecos { get; set; } = new List<Endereco>(); // Relacionamento com Endereco
     }
 }

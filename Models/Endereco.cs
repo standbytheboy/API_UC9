@@ -26,5 +26,8 @@ namespace MinhaAPI.Models
         [Required(ErrorMessage = "O Número é obrigatório.")]
         public string Numero { get; set; } = string.Empty;
 
+        public int ClienteId { get; set; }
+        public Cliente? Cliente { get; set; } // Relacionamento com Cliente
+
     }
 }
