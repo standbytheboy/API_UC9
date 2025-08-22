@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MinhaAPI.Models
 {
@@ -27,6 +28,8 @@ namespace MinhaAPI.Models
         public string Numero { get; set; } = string.Empty;
 
         public int ClienteId { get; set; }
+
+        [JsonIgnore]
         public Cliente? Cliente { get; set; } // Relacionamento com Cliente
 
     }
